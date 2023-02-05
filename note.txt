@@ -1,0 +1,9 @@
+allocator:
+
+std::allocator<int> alloc;
+
+int *p = alloc.allocate(1);
+alloc.construct(p, 10);
+std::cout << *p << std::endl;
+alloc.deallocate(p, 1);
+alloc.destroy(p);
