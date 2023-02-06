@@ -1,31 +1,36 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-// #include "vector.tpp"
+#include "vector.tpp"
 
 int main(void)
 {
-    std::allocator<int> myAllocator;
-    int *arr = myAllocator.allocate(5);
-
-    myAllocator.construct(arr, 20);
-    std::cout << arr[3] << std::endl;
-    std::cout << arr[0] << std::endl;
-
-    myAllocator.deallocate(arr, 5);
-    myAllocator.destroy(arr);
+	int n  = 10;
+    std::vector<int> v1(n, 20);
+	std::vector<int> v2 = v1;
+	std::vector<int> v3(154875, 30);
+	std::vector<int> v4;
+	v3 = v2;
+	v4 = v3;
+	// std::cout << "======= V1 ========" << std::endl;
+	// for(int i = 0; i < n; i++)
+	// 	std::cout << v1[i] << std::endl;
+	// std::cout << "======= V2 ========" << std::endl;
+	// for(int i = 0; i < n; i++)
+	// 	std::cout << v2[i] << std::endl;
+	// std::cout << "======= V4 ========" << std::endl;
+	// for(int i = 0; i < n; i++)
+	// 	std::cout << v4[i] << std::endl;
+	std::cout << "======= V1 Size && Capacitry" << std::endl;
+    std::cout << v1.size() << std::endl;
+    std::cout << v1.capacity() << std::endl;
+	std::cout << "======= V2 Size && Capacitry" << std::endl;
+    std::cout << v2.size() << std::endl;
+    std::cout << v2.capacity() << std::endl;
+	std::cout << "======= V3 Size && Capacitry" << std::endl;
+    std::cout << v3.size() << std::endl;
+    std::cout << v3.capacity() << std::endl;
+	std::cout << "======= V4 Size && Capacitry" << std::endl;
+    std::cout << v4.size() << std::endl;
+    std::cout << v4.capacity() << std::endl;
 }
-
-// int main(void)
-// {
-//     ft::vector<int> v1, v2;
-//     std::vector<int> vctor(10, 20);
-
-//     std::cout << vctor.size() << std::endl;
-//     std::cout << v1.size() << std::endl;
-//     std::cout << v1.capacity() << std::endl;
-//     v2 = v1;
-//     v2 = v2;
-//     std::cout << v2.size() << std::endl;
-//     std::cout << v2.capacity() << std::endl;
-// }
