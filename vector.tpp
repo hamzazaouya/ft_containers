@@ -25,15 +25,28 @@ namespace ft
             _size = 0;
             _capacity = 0;
         }
-		reference operator = (const_reference v)
+		vector(size_type n, const value_type& val)
 		{
-			std::cout << "Copy Assignment operator" << std::endl;
-			if(this != &v)
+			_size = n;
+			_capacity = n;
+			this->_arr = allocator_type.allocate(n);
+			allocator_type.construct(_arr, val);
+		}
+		vector (const vector& copy)
+		{
+			this->_size = copy._size;
+			this->_capacity = copy._capacity;
+			this->_arr = _arr;
+		}
+		vector& operator = (const vector& copy)
+		{
+			if(this != &copy)
 			{
-				std::cout << "Copy Assignment operator" << std::endl;
-				this->_size = v._size;
-				this->_capacity = v._capacity;
+				this->_size = copy._size;
+				this->_capacity = copy._capacity;
+				this->_arr = _arr;
 			}
+			return (*this);
 		}
         size_type size(void) const
         {
@@ -43,6 +56,14 @@ namespace ft
         {
             return (_capacity);
         }
+		reference operator[] (size_type n)
+		{
+			return (this->_arr[n]);
+		}
+		const_reference operator[] (size_type n) const
+		{
+			return (this->_arr[n]);
+		}
         ~vector()
         {
 			std::cout << "distructor called" << std::endl;
