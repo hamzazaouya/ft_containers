@@ -1,11 +1,12 @@
 #ifndef VECTOR_TPP
 #define VECTOR_TPP
 #include <memory>
+#include "iterator.tpp"
 namespace ft
 {
 	template <class T, class Alloc = std::allocator<T> > class vector
 	{
-		private:
+		public:
 			typedef T											value_type;
 			typedef Alloc										allocator_type;
 			typedef size_t										size_type;
@@ -13,19 +14,13 @@ namespace ft
 			typedef typename allocator_type::const_reference	const_reference;
 			typedef typename allocator_type::pointer			pointer;
 			typedef typename allocator_type::const_pointer		const_pointer;
-
-			value_type		*_arr;
-			size_type		_size;
-			size_type		_capacity;
-			allocator_type	_allocator;
-
-		public:
+			typedef Iterator<value_type>							iterator;
 		vector()
 		{
 			//std::cout << "Default constructor" << std::endl;
 			this->_size = 0;
 			this->_capacity = 0;
-			this->_arr = NULL;
+			this->_m_data = NULL;
 		}
 		vector(size_type n, const value_type& val)
 		{
@@ -33,19 +28,22 @@ namespace ft
 			allocator_type alloc;
 			this->_size = n;
 			this->_capacity = n;
-			this->_arr = this->_allocator.allocate(n);
+			this->_m_data = this->_allocator.allocate(n);
 			for(int i = 0; i < n; i++)
-				_arr[i] = val;
+				_m_data[i] = val;
 		}
 		vector (const vector& copy)
 		{
 			//std::cout << "Copy Constructor" << std::endl;
 			this->_size = copy._size;
 			this->_capacity = copy._capacity;
-			this->_arr = this->_allocator.allocate(this->_capacity);
+			this->_m_data = this->_allocator.allocate(this->_capacity);
 			for(int i = 0; i < this->_size; i++)
-				this->_arr[i] = copy._arr[i];
+				this->_m_data[i] = copy._m_data[i];
 		}
+
+		/*============================ Opeator Overloading =============================*/
+
 		vector& operator= (const vector& copy)
 		{
 			//std::cout << "Copy Assignment" << std::endl;
@@ -54,14 +52,25 @@ namespace ft
 				this->_size = copy._size;
 				if(this->_capacity < copy._capacity)
 					this->_capacity = copy._capacity;
-				if(this->_arr)
-					this->_allocator.destroy(this->_arr);
-				this->_arr = this->_allocator.allocate(this->_capacity);
+				if(this->_m_data)
+					this->_allocator.destroy(this->_m_data);
+				this->_m_data = this->_allocator.allocate(this->_capacity);
 				for(int i = 0; i < this->_size; i++)
-					this->_arr[i] = copy._arr[i];
+					this->_m_data[i] = copy._m_data[i];
 			}
 			return (*this);
 		}
+		reference operator[] (size_type n)
+		{
+			return (this->_m_data[n]);
+		}
+		const_reference operator[] (size_type n) const
+		{
+			return (this->_m_data[n]);
+		}
+
+		/*================== Capacity Functions =======================*/
+
 		size_type size(void) const
 		{
 			return (_size);
@@ -70,20 +79,29 @@ namespace ft
 		{
 			return (_capacity);
 		}
-		reference operator[] (size_type n)
+
+		/*========================= Iterator Functions ======================*/
+
+		iterator begin(void)
 		{
-			return (this->_arr[n]);
+			return (iterator(this->_m_data));
 		}
-		const_reference operator[] (size_type n) const
+		iterator end(void)
 		{
-			return (this->_arr[n]);
+			return (iterator(this->_m_data + this->_size));
 		}
 		~vector()
 		{
 			//std::cout << "distructor called" << std::endl;
-			this->_allocator.deallocate(this->_arr, this->_capacity);
-			this->_allocator.destroy(this->_arr);
+			this->_allocator.deallocate(this->_m_data, this->_capacity);
+			this->_allocator.destroy(this->_m_data);
 		}
+
+		private:
+			value_type		*_m_data;
+			size_type		_size;
+			size_type		_capacity;
+			allocator_type	_allocator;
 	};
 }
 
