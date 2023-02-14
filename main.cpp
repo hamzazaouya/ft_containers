@@ -1,36 +1,60 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include "vector.tpp"
+#include "vector/vector.tpp"
+typedef struct test
+{
+	int a;
+	int b;
+}	t_test;
+
+
+template < Iter >
+struct iterator_traits
+{
+	typedef Iter::value_type value_type;
+	typedef Iter::reference reference;
+	typedef Iter::pointer pointer;
+}
+
+template <T>
+struct iterator_traits < T * >
+{
+	typedef Iter::value_type value_type;
+	typedef Iter::reference reference;
+	typedef Iter::pointer pointer;
+}
+
+template < const T * >
+struct iterator_traits
+{
+	typedef T value_type;
+	typedef const T * pointer;
+	typedef const T & reference;
+}
+
 
 int main(void)
 {
-	int n  = 10;
-    std::vector<int> v1(n, 20);
-	std::vector<int> v2 = v1;
-	std::vector<int> v3(154875, 30);
-	std::vector<int> v4;
-	v3 = v2;
-	v4 = v3;
-	// std::cout << "======= V1 ========" << std::endl;
-	// for(int i = 0; i < n; i++)
-	// 	std::cout << v1[i] << std::endl;
-	// std::cout << "======= V2 ========" << std::endl;
-	// for(int i = 0; i < n; i++)
-	// 	std::cout << v2[i] << std::endl;
-	// std::cout << "======= V4 ========" << std::endl;
-	// for(int i = 0; i < n; i++)
-	// 	std::cout << v4[i] << std::endl;
-	std::cout << "======= V1 Size && Capacitry" << std::endl;
-    std::cout << v1.size() << std::endl;
-    std::cout << v1.capacity() << std::endl;
-	std::cout << "======= V2 Size && Capacitry" << std::endl;
-    std::cout << v2.size() << std::endl;
-    std::cout << v2.capacity() << std::endl;
-	std::cout << "======= V3 Size && Capacitry" << std::endl;
-    std::cout << v3.size() << std::endl;
-    std::cout << v3.capacity() << std::endl;
-	std::cout << "======= V4 Size && Capacitry" << std::endl;
-    std::cout << v4.size() << std::endl;
-    std::cout << v4.capacity() << std::endl;
+	ft::vector<int> v;
+	ft::vector<int>::const_iterator iter = v.begin();
+	iter = v.end();
+
+	// int arr[10] = {1, 2, 3, 4};
+	// const int *p = arr;
+	// int *p1 = p;
+	// std::cout << *p << std::endl;
+	// p++;
+	// std::cout << *p << std::endl;
+	// *p = 10;
+	// ft::vector<int>::iterator iter1, iter2;
+	// ft::vector<int> v;
+	// v.push_back(123);
+	// v.push_back(2334);
+
+	// iter1 = v.begin();
+	// iter2 = v.begin();
+	// 1 + iter1;
+	// std::cout << (iter1 == iter2) << std::endl;
+	// std::cout << (iter1 != iter2) << std::endl;
 }
