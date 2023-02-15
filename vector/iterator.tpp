@@ -1,11 +1,13 @@
 #include <iostream>
 namespace ft
 {
-    template<typename value_type> class Iterator
+    template <class Category, class T, class Distance = ptrdiff_t,class Pointer = T*, class Reference = T&> class Iterator
     {
-        typedef value_type&     reference;
-        typedef value_type*     pointer;
-        typedef size_t          size_type;
+        typedef T         value_type;
+        typedef Distance  difference_type;
+        typedef Pointer   pointer;
+        typedef Reference reference;
+        typedef Category  iterator_category;
         public:
             //Default Constructor
             Iterator() { this->_ptr = NULL; }
