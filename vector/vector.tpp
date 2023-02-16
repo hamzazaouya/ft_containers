@@ -1,5 +1,6 @@
 #ifndef VECTOR_TPP
 #define VECTOR_TPP
+#include <iostream>
 #include <memory>
 #include <stdexcept> 
 #include <math.h>
@@ -9,14 +10,14 @@ namespace ft
 	template <class T, class Alloc = std::allocator<T> > class vector
 	{
 		public:
-			typedef T											value_type;
-			typedef Alloc										allocator_type;
-			typedef size_t										size_type;
-			typedef typename allocator_type::reference			reference;
-			typedef typename allocator_type::const_reference	const_reference;
-			typedef typename allocator_type::pointer			pointer;
-			typedef typename allocator_type::const_pointer		const_pointer;
-			typedef Iterator<std::input_iterator_tag,value_type>							iterator;
+			typedef T												value_type;
+			typedef Alloc											allocator_type;
+			typedef size_t											size_type;
+			typedef typename allocator_type::reference				reference;
+			typedef typename allocator_type::const_reference		const_reference;
+			typedef typename allocator_type::pointer				pointer;
+			typedef typename allocator_type::const_pointer			const_pointer;
+			typedef Iterator<std::input_iterator_tag,value_type>	iterator;
 		vector()
 		{
 			this->_size = 0;
@@ -27,16 +28,22 @@ namespace ft
 		{
 			this->_size = n;
 			this->_capacity = n;
-			this->_data = this->alloc.allocate(n);
+			this->_data = this->_allocator.allocate(n);
 			for(int i = 0; i < n; i++)
 				this->_allocator.construct(this->_data + i, val);
 		}
-		template <class InputIterator> vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-		{
-			
-		}
+		// template <class InputIterator> vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+		// {
+		// 	std::cout << "hello 2" << std::endl;
+		// 	// while(first < last)
+		// 	// {
+		// 	// 	this->push_back(*first);
+		// 	// 	first++;
+		// 	// }
+		// }
 		vector (const vector& copy)
 		{
+			std::cout << "hello 3" << std::endl;
 			this->_size = copy._size;
 			this->_capacity = copy._capacity;
 			this->_data = this->_allocator.allocate(this->_capacity);
@@ -69,15 +76,10 @@ namespace ft
 
 		/*========================= Iterator Functions ======================*/
 
-		iterator begin(void)
-		{
-			return (iterator(this->_data));
-		}
-		iterator end(void)
-		{
-			return (iterator(this->_data + this->_size));
-		}
-
+		iterator begin(void) { return (iterator(this->_data)); }
+		//const_iterator begin() const {return (iterator(this->_data));}
+		iterator end(void) { return (iterator(this->_data + this->_size)); }
+		//const_iterator end() const {return (iterator(this->_data + this->_size))}
 		/*================== Capacity Functions =======================*/
 
 		bool empty() const { return (!this->_size); }
@@ -135,6 +137,15 @@ namespace ft
 
 		// ======================== Modifiers Functions =========================
 
+		template <class InputIterator>
+  		void assign (InputIterator first, InputIterator last)
+		{
+			while(first < last)
+			{
+				push_back(*first);
+				first++;
+			}
+		}
 		void push_back (const value_type& val)
 		{
 			if(this->_capacity == this->_size)

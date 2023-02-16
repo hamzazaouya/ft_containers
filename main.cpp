@@ -5,20 +5,24 @@
 
 int main ()
 {
-  ft::vector<int> myvector;
+  // constructors used in the same order as described above:
+  // ft::vector<int> first;                                // empty vector of ints
+  ft::vector<int> second;
+  
+  second.push_back(10);
+  second.push_back(20);
+  second.push_back(30); 
+  second.push_back(50);                     // four ints with value 100
 
-  myvector.push_back(10);
+  ft::vector<int>::iterator iter_start = second.begin();
+  ft::vector<int>::iterator iter_end;
+  iter_end = second.end();
 
-  while (myvector.back() != 0)
-  {
-    myvector.push_back ( myvector.back() -1 );
-  }
-
-  std::cout << "myvector contains:";
-  for (unsigned i=0; i<myvector.size() ; i++)
-    std::cout << ' ' << myvector[i];
-  std::cout << '\n';
-
+  std::cout << *iter_start << std::endl;
+  iter_end--;
+  std::cout << *iter_end << std::endl;
+  // ft::vector<int> third (second.begin(),second.end());  // iterating through second
+  // ft::vector<int> fourth (third);                       // a copy of third
   return 0;
 }
 
