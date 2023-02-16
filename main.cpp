@@ -2,59 +2,71 @@
 #include <memory>
 #include <vector>
 #include "vector/vector.tpp"
-typedef struct test
-{
-	int a;
-	int b;
-}	t_test;
 
-
-template < Iter >
-struct iterator_traits
+int main ()
 {
-	typedef Iter::value_type value_type;
-	typedef Iter::reference reference;
-	typedef Iter::pointer pointer;
+  ft::vector<int> myvector;
+
+  myvector.push_back(10);
+
+  while (myvector.back() != 0)
+  {
+    myvector.push_back ( myvector.back() -1 );
+  }
+
+  std::cout << "myvector contains:";
+  for (unsigned i=0; i<myvector.size() ; i++)
+    std::cout << ' ' << myvector[i];
+  std::cout << '\n';
+
+  return 0;
 }
 
-template <T>
-struct iterator_traits < T * >
-{
-	typedef Iter::value_type value_type;
-	typedef Iter::reference reference;
-	typedef Iter::pointer pointer;
-}
+// int main ()
+// {
+//   ft::vector<int> myvector;
+//   int sum (0);
 
-template < const T * >
-struct iterator_traits
-{
-	typedef T value_type;
-	typedef const T * pointer;
-	typedef const T & reference;
-}
+//   for (int i=1;i<=10;i++) myvector.push_back(i);
+
+//   while (!myvector.empty())
+//   {
+//      sum += myvector.back();
+//      myvector.pop_back();
+//   }
+
+//   std::cout << "total: " << sum << '\n';
+
+//   return 0;
+// }
 
 
-int main(void)
-{
-	ft::vector<int> v;
-	ft::vector<int>::const_iterator iter = v.begin();
-	iter = v.end();
 
-	// int arr[10] = {1, 2, 3, 4};
-	// const int *p = arr;
-	// int *p1 = p;
-	// std::cout << *p << std::endl;
-	// p++;
-	// std::cout << *p << std::endl;
-	// *p = 10;
-	// ft::vector<int>::iterator iter1, iter2;
-	// ft::vector<int> v;
-	// v.push_back(123);
-	// v.push_back(2334);
+// int main ()
+// {
+//   ft::vector<int>::size_type sz;
 
-	// iter1 = v.begin();
-	// iter2 = v.begin();
-	// 1 + iter1;
-	// std::cout << (iter1 == iter2) << std::endl;
-	// std::cout << (iter1 != iter2) << std::endl;
-}
+//   ft::vector<int> foo;
+//   sz = foo.capacity();
+//   std::cout << "making foo grow:\n";
+//   for (int i=0; i<100; ++i) {
+//     foo.push_back(i);
+//     if (sz!=foo.capacity()) {
+//       sz = foo.capacity();
+//       std::cout << "capacity changed: " << sz << '\n';
+//     }
+//   }
+
+//   std::vector<int> bar;
+//   sz = bar.capacity();
+//   bar.reserve(100);   // this is the only difference with foo above
+//   std::cout << "making bar grow:\n";
+//   for (int i=0; i<100; ++i) {
+//     bar.push_back(i);
+//     if (sz!=bar.capacity()) {
+//       sz = bar.capacity();
+//       std::cout << "capacity changed: " << sz << '\n';
+//     }
+//   }
+//   return 0;
+// }
