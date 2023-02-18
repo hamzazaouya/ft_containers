@@ -23,12 +23,12 @@ namespace ft
             Iterator& operator-= (const difference_type& n) { this->_ptr -= n; return (*this); }
 
         // Bool
-            bool operator== (const Iterator& rhs) { return (this->_ptr == rhs._ptr); }
-            bool operator!= (const Iterator& rhs) { return (this->_ptr != rhs._ptr); }
-            bool operator< (const Iterator& iter) {return (this->_ptr < iter); }
-            bool operator> (const Iterator& iter) {return (this->_ptr > iter); }
-            bool operator<= (const Iterator& iter) {return (this->_ptr <= iter); }
-            bool operator>= (const Iterator& iter) {return (this->_ptr >= iter); }
+            bool operator== (const Iterator& iter) { return (this->_ptr == iter._ptr); }
+            bool operator!= (const Iterator& iter) { return (this->_ptr != iter._ptr); }
+            bool operator< (const Iterator& iter) {return (this->_ptr < iter._ptr); }
+            bool operator> (const Iterator& iter) {return (this->_ptr > iter._ptr); }
+            bool operator<= (const Iterator& iter) {return (this->_ptr <= iter._ptr); }
+            bool operator>= (const Iterator& iter) {return (this->_ptr >= iter._ptr); }
 
         // Reference
             reference operator*() const { return(*(this->_ptr)); }
@@ -36,26 +36,23 @@ namespace ft
             reference operator[] (const difference_type n) { return (this->_ptr[n]); }
         
         // Iterator
-            Iterator& operator++() { this->_ptr++; return (*this); }
-            Iterator& operator--() { this->_ptr--; return (*this); }
             Iterator operator+ (const difference_type& n) const { return (Iterator(this->_ptr + n)); }
             Iterator operator- (const difference_type& n) { return (Iterator(this->_ptr - n)); }
             Iterator operator- (const reference& iter) {return (Iterator(this->_ptr - iter._ptr)); }
-
-        //Value Type
+            Iterator& operator++() { this->_ptr++; return (*this); }
+            Iterator& operator--() { this->_ptr--; return (*this); }
             Iterator operator++(int)
             {
-                value_type temp;
+                Iterator temp = *this;
                 this->_ptr++;
                 return (temp);
             }
             Iterator operator--(int)
             {
-                value_type temp;
+                Iterator temp = *this;
                 this->_ptr--;
                 return (temp);
             }
-            reference operator[] (difference_type n) const {return (*(this->_ptr + n))}
         private:
             pointer _ptr;
     };

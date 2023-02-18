@@ -2,9 +2,11 @@
 #define VECTOR_TPP
 #include <iostream>
 #include <memory>
-#include <stdexcept> 
+#include <stdexcept>
+#include <type_traits>
 #include <math.h>
 #include "iterator.tpp"
+#include "../utils/type_traits.tpp"
 namespace ft
 {
 	template <class T, class Alloc = std::allocator<T> > class vector
@@ -18,32 +20,36 @@ namespace ft
 			typedef typename allocator_type::pointer				pointer;
 			typedef typename allocator_type::const_pointer			const_pointer;
 			typedef Iterator<std::input_iterator_tag,value_type>	iterator;
-		vector()
+		explicit vector (const allocator_type& alloc = allocator_type())
 		{
 			this->_size = 0;
 			this->_capacity = 0;
 			this->_data = NULL;
+			this->_allocator = alloc;
 		}
-		vector(size_type n, const value_type& val, const allocator_type& alloc = allocator_type())
+		explicit vector(size_type n, const value_type& val, const allocator_type& alloc = allocator_type())
 		{
+			std::cout << "hello forom Constructer 1" << std::endl;
 			this->_size = n;
 			this->_capacity = n;
 			this->_data = this->_allocator.allocate(n);
+			this->_allocator = alloc;
 			for(int i = 0; i < n; i++)
 				this->_allocator.construct(this->_data + i, val);
 		}
-		// template <class InputIterator> vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-		// {
-		// 	std::cout << "hello 2" << std::endl;
-		// 	// while(first < last)
-		// 	// {
-		// 	// 	this->push_back(*first);
-		// 	// 	first++;
-		// 	// }
-		// }
+		template <class InputIterator>
+		vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0 )
+		{
+			std::cout << "Hello from Iterator constructer" << std::endl;
+			this->_allocator = alloc;
+			// while(first < last)
+			// {
+			// 	this->push_back(*first);
+			// 	first++;
+			// }
+		}
 		vector (const vector& copy)
 		{
-			std::cout << "hello 3" << std::endl;
 			this->_size = copy._size;
 			this->_capacity = copy._capacity;
 			this->_data = this->_allocator.allocate(this->_capacity);
