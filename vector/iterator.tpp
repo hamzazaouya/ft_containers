@@ -19,27 +19,28 @@ namespace ft
                     this->_ptr = iter._ptr;
                 return(*this);
             }
-            Iterator& operator+= (const difference_type& n) { this->_ptr += n; return (*this); }
-            Iterator& operator-= (const difference_type& n) { this->_ptr -= n; return (*this); }
-
         // Bool
             bool operator== (const Iterator& iter) { return (this->_ptr == iter._ptr); }
             bool operator!= (const Iterator& iter) { return (this->_ptr != iter._ptr); }
-            bool operator< (const Iterator& iter) {return (this->_ptr < iter._ptr); }
-            bool operator> (const Iterator& iter) {return (this->_ptr > iter._ptr); }
-            bool operator<= (const Iterator& iter) {return (this->_ptr <= iter._ptr); }
-            bool operator>= (const Iterator& iter) {return (this->_ptr >= iter._ptr); }
+            bool operator< (const Iterator& iter) { return (this->_ptr < iter._ptr); }
+            bool operator> (const Iterator& iter) { return (this->_ptr > iter._ptr); }
+            bool operator<= (const Iterator& iter) { return (this->_ptr <= iter._ptr); }
+            bool operator>= (const Iterator& iter) { return (this->_ptr >= iter._ptr); }
 
         // Reference
             reference operator*() const { return(*(this->_ptr)); }
-            pointer operator-> () const { return (_ptr); }
+            pointer operator-> () const {return (_ptr); }
             reference operator[] (const difference_type n) { return (this->_ptr[n]); }
         
         // Iterator
+            Iterator& operator+= (const difference_type& n) { this->_ptr += n; return (*this); }
+            Iterator& operator-= (const difference_type& n) { this->_ptr -= n; return (*this); }
             Iterator operator+ (const difference_type& n) const { return (Iterator(this->_ptr + n)); }
             Iterator operator- (const difference_type& n) { return (Iterator(this->_ptr - n)); }
-            Iterator operator- (const reference& iter) {return (Iterator(this->_ptr - iter._ptr)); }
-            Iterator& operator++() { this->_ptr++; return (*this); }
+            size_t operator- (const reference& iter) { std::cout << "Hello word from iter -iter " <<std::endl; return (this->_ptr - iter._ptr); }
+            Iterator& operator++() {
+                std::cout << "hello from iterator" << std::endl;
+                 this->_ptr++; return (*this); }
             Iterator& operator--() { this->_ptr--; return (*this); }
             Iterator operator++(int)
             {
@@ -56,4 +57,9 @@ namespace ft
         private:
             pointer _ptr;
     };
+    template <class Iterator>
+    typename Iterator<_Iterator>::difference_type operator- ( const Iterator<_Iterator>& lhs, const Iterator<_Iterator>& rhs)
+    {
+        return()
+    }
 }

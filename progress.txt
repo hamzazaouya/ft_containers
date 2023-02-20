@@ -1,1 +1,11 @@
 Day 1: 06/02/2023
+
+<---------------->
+mission1:   3:45 PM 18/02/2023: why iterator ++ don't work; I will fix the iterator operator first and then
+            return to assign.
+
+mission2:   6:42 PM 18/02/2023: I stuck a operator - espacialy in (iter - iter), I have to make a friend fuctions,
+            I review the reverse iterator the I have to make itrator_traits to make reverse iterator.
+            1 - iterator_traits.
+            2 - reverse iterator.
+            3 - finish iterator.

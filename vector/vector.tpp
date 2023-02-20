@@ -29,24 +29,26 @@ namespace ft
 		}
 		explicit vector(size_type n, const value_type& val, const allocator_type& alloc = allocator_type())
 		{
-			std::cout << "hello forom Constructer 1" << std::endl;
-			this->_size = n;
-			this->_capacity = n;
-			this->_data = this->_allocator.allocate(n);
-			this->_allocator = alloc;
-			for(int i = 0; i < n; i++)
-				this->_allocator.construct(this->_data + i, val);
+			// std::cout << "hello forom Constructer 1" << std::endl;
+			// this->_size = n;
+			// this->_capacity = n;
+			// this->_data = this->_allocator.allocate(n);
+			// this->_allocator = alloc;
+			// for(int i = 0; i < n; i++)
+			// 	this->_allocator.construct(this->_data + i, val);
 		}
 		template <class InputIterator>
-		vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0 )
+		vector(InputIterator first, InputIterator last, 
+				const allocator_type& alloc = allocator_type(), 
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type * = 0 )
 		{
-			std::cout << "Hello from Iterator constructer" << std::endl;
-			this->_allocator = alloc;
+			// this->_allocator = alloc;
 			// while(first < last)
 			// {
 			// 	this->push_back(*first);
 			// 	first++;
 			// }
+			std::cout << "Hello from Iterator constructer" << std::endl;
 		}
 		vector (const vector& copy)
 		{
@@ -143,15 +145,28 @@ namespace ft
 
 		// ======================== Modifiers Functions =========================
 
-		template <class InputIterator>
-  		void assign (InputIterator first, InputIterator last)
+		template <class InputIterator> 
+		void assign (InputIterator first, InputIterator last, 
+			typename enable_if<!is_integral<InputIterator>::value>::type * = 0)
 		{
-			while(first < last)
+			int len = 0;
+			InputIterator iter;
+			for(iter = first; iter < last; iter++)
+				len++;
+			std::cout << "len = " << len << std::endl;
+			this->reserve(len);
+			for(int i = 0 ; i < len; i++)
 			{
-				push_back(*first);
-				first++;
+				std::cout << *first << std::endl;
+				this->_data[i] = *(first + i);
 			}
+			this->_size = len;
+
 		}
+		// void assign (size_type n, const value_type& val)
+		// {
+
+		// }
 		void push_back (const value_type& val)
 		{
 			if(this->_capacity == this->_size)

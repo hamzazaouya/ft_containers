@@ -6,11 +6,20 @@
 
 int main(void)
 {
-  ft::vector<int>::iterator begin;
-  ft::vector<int>::iterator end;
-  int arr[5] = {10, 20, 30};
-  ft::vector<int> v1(2,100);
-  ft::vector<int> v2(v1.begin(), v1.end());
-  ft::vector<int> v3(arr, arr + 3);
+  ft::vector<int> v1;
+  std::vector<int> v2;
+  ft::vector<int>::iterator iter1;
+  std::vector<int>::iterator iter2;
+
+  int arr[] = {110, 2, 3, 4, 5};
+  for(int i = 0; i < 5; i++)
+  {
+    v1.push_back(arr[i]); 
+    v2.push_back(arr[i]);
+  }
+  iter1 = v1.end();
+  iter2 = v2.end();
+  std::cout << v2.end() - v2.begin() << std::endl;
+  std::cout << v1.end() - v1.begin() << std::endl;
   return (0);
 }
